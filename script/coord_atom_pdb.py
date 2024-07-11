@@ -3,10 +3,13 @@
 import os 
 import Bio.PDB
 from Bio.PDB import PDBParser
+import numpy as np
+import pandas as pd
 
 # récupère dans une liste les noms des fichiers du dossier /gstock/mapper/CEP3
 directory_path_os = '/gstock/mapper/CEP3'
 list_pdb = os.listdir(directory_path_os)
+
 points_atom = []
 
 # lire et extraire les coordonnées x, y et z pour un fichier PDB 'name_pdb' à définir
@@ -15,10 +18,15 @@ def coord_atom (name_pdb):
     p = PDBParser()
     structure = p.get_structure('X', file_path)
     for atom in structure.get_atoms():
-        points_atom.append(atom.get_coord()) # stocker les résultats des coordonées sous forme de variable
+        points_atom.append(atom.get_coord().tolist()) # stocker les résultats des coordonées sous forme de variable
     return points_atom
 
 # test pour 1 fichier PDB (le premier) 
 pdb_test = list_pdb[0]
 res_coord = coord_atom(pdb_test)
+n_atoms = len(res_coord)
+
+print(res_coord)
+print(n_atoms)
+
 pass
