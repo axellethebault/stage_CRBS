@@ -1,50 +1,62 @@
 # OBJECTIF DU SCRIPT: utiliser l'algorithme mapper pour projeter en 2D des coordonnées d'atomes 3D de .pdb, clusteriser les points et visualiser en tant que graphe 2D
-
-#EN COURS D'ECRITURE, SCRIPT NON FINI
-
-# Import the class
 import kmapper as km
-import matplotlib as plt
-import plotly.express as px
-import os 
-import Bio.PDB
-from Bio.PDB import PDBParser
+import networkx as nx
+import numpy as np
+import matplotlib.pyplot as plt
 import sklearn
+import sklearn.cluster
+from sklearn.metrics import silhouette_score
 from sklearn.manifold import TSNE
-import coord_atom_pdb
+import extract_main_chain_pdb
+import projections_data_pdb
 
-# récupère dans une liste les noms des fichiers du dossier /gstock/mapper/CEP3 et stock dans data_pdb les listes du 1er fichier PDB
-directory_path_os = '/gstock/mapper/CEP3'
-list_pdb = os.listdir(directory_path_os)
-data_pdb = coord_atom_pdb.coord_atom(list_pdb[0])
+# faire une CLASS pour faire du polymorphisme
 
 # Initialize
 mapper = km.KeplerMapper(verbose=1)
 
-# Fit to and transform the data
-# Projection faite avec t-SNE (seed fixe) et à importer via projections_data_pdb.py
-projected_data = mapper.fit_transform(data, projection=[0,1]) # X-Y axis # "data" doit être un ndarray
+# Creation of the lens (projected data using t-SNE with projections_data_pdb.py)
+projected_data = projections_data_pdb.proj_t_sne
 
 # Create a cover with 10 elements 
 cover = km.Cover(n_cubes=10)
+ids = np.array([x for x in range(projected_data.shape[0])])
+projected_data2 = np.c_[ids, projected_data]
+print(cover.fit(projected_data2))
 
-# Cluster the projected dataset
-cluster
+
+# Calculate the optimal number of clusters required for each PDB file
+opti_n_cluster = 0
+score_cluster = -1 # Lowest and worst possible score returned with the silhouette score function
+
+for n_clusters in range(2,10):
+    # Initialize the clusterer with n_clusters value and a random generator, seed of 0 for reproducibility.
+    clusterer = sklearn.cluster.KMeans(n_clusters=n_clusters, random_state=0)
+    cluster_labels = clusterer.fit_predict(projected_data)
+
+    # The silhouette_score gives the average value for all the samples.This gives a perspective into the density and separation of the formed clusters
+    silhouette_avg = silhouette_score(projected_data, cluster_labels)
+    
+    if score_cluster < silhouette_avg :
+        score_cluster = silhouette_avg
+        opti_n_cluster = n_clusters
+    print('avec', n_clusters,'le score est de ', silhouette_avg)
+
+print('nombre optimal de clusters = ', opti_n_cluster)
+
 # Create dictionary called 'graph' with nodes, edges and meta-information
-graph = mapper.map(projected_data, data, cover=cover)
+graph = mapper.map(lens=projected_data, 
+                   X=extract_main_chain_pdb.df, 
+                   clusterer= sklearn.cluster.KMeans(opti_n_cluster),
+                   cover=cover)
 
-# Definition of lenses
+# Visualize the graph
+mapper.visualize(graph,
+                 path_html="/home/thebault/stage/results/img/test_data_pdb.html",
+                 title="Graph mapper")
 
-# Create a simplicial complex
-mapper.map(
-    lens,
-    X,
-    cover=km.Cover(n_cubes=15, perc_overlap=0.4),
-    clusterer=sklearn.cluster.KMeans(n_clusters=2, random_state=1618033),
-)
+km.draw_matplotlib(graph, layout='kk')
 
-mapper.visualize(graph, path_html="test_data_pdb.html",
-                 title="data_pdb(n_samples=5000, noise=0.03, factor=0.3)")
-
-#km.draw_matplotlib(graph, layout='kk')
-
+# Plot the networkx structure in a simple way
+G = nx.complete_graph(164)
+nx.draw(G)

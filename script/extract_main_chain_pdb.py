@@ -2,7 +2,6 @@
 # se placer dans l'environnement conda "condathebault" sur vscode avant de lancer ce script
 import os 
 import pandas as pd 
-import plotly.express as px
 from Bio.PDB import PDBParser
 
 # récupère dans une liste les noms des fichiers du dossier /gstock/mapper/CEP3
@@ -40,9 +39,9 @@ n_row_df = list(range(0,n_atoms))
 
 # convertir res_coord en dataframe
 df = pd.DataFrame(res_coord, columns = ['x', 'y', 'z']) 
-df.insert(3,'numero atome', n_row_df, True) # ajout d'une colonne correspondant au numéro d'atome, utile pour colorer dans le plot
+'''df.insert(3,'numero atome', n_row_df, True) # ajout d'une colonne correspondant au numéro d'atome, utile pour colorer dans le plot
 
 # plot en 3D
 fig = px.scatter_3d(df, x='x', y='y', z='z', color='numero atome', color_continuous_scale=px.colors.sequential.Turbo)
 fig.update_traces(marker_size = 3)
-#fig.show()
+#fig.show()'''
