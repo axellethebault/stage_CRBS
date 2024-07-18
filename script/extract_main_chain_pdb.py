@@ -9,10 +9,10 @@ directory_path_os = '/gstock/mapper/CEP3'
 list_pdb = os.listdir(directory_path_os)
 
 points_atom = []
-A = ["N", "CA", "C", "O"] # liste des atomes de la chaîne principale
 
 # lire et extraire les coordonnées x, y et z des atomes de la chaîne principale "A" pour un fichier PDB 'name_pdb' à définir
 def coord_atom (name_pdb):
+    A = ["N", "CA", "C", "O"] # liste des atomes de la chaîne principale
     file_path = os.path.join(directory_path_os, name_pdb) #indique le chemin lié à chaque fichier 
     p = PDBParser()
     structure = p.get_structure('X', file_path)
