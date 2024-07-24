@@ -4,9 +4,11 @@ import numpy as np
 from sklearn.manifold import TSNE
 from extract_main_chain_pdb import res_coord
 import class_KMeans
+import networkx as nx
+import matplotlib.pyplot as plt
 
 # Initialize
-mapper = km.KeplerMapper(verbose=2)
+mapper = km.KeplerMapper(verbose=0)
 
 # Creation of the lens (list oc 3D coordinates from extract_main_chain_pdb.py)
 data = np.array(res_coord) #np array des coordonnées 3D de la chaîne principale d'1 fichier
@@ -34,6 +36,8 @@ mapper.visualize(graph,
 
 km.draw_matplotlib(graph, layout='kk')
 
+#Get the Networkx structure
 
-# Plot the networkx structure in a simple way
-
+G = km.adapter.to_networkx(graph) #converts the mapper.map graph into a networkx.Graph() object
+nx.draw_networkx(G, pos=nx.spring_layout(G, seed=0)) #déterministe car seed fixée
+plt.show()

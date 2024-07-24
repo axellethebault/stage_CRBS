@@ -9,7 +9,7 @@ data = np.array(res_coord) #np array des coordonnées 3D de la chaîne principal
 
 class SmartKMeans(sklearn.cluster.KMeans): #classe fille qui hérite de la classe KMeans de scikit, mais sans le paramètre n_cluster
     def __init__(self, init="k-means++", n_init="auto", max_iter=300, tol=1e-4, verbose=1, random_state=0, copy_x=True, algorithm="lloyd"):
-        super().__init__(init=init, n_init=n_init, max_iter=max_iter, tol=tol, verbose=verbose, random_state=random_state) #PK N CLUSTER =1??
+        super().__init__(init=init, n_init=n_init, max_iter=max_iter, tol=tol, verbose=verbose, random_state=random_state) 
     
     def _find_best_model(self, data): #best_model = KMeans avec n_cluster optimisé
         max_score_cluster = -1 # Lowest and worst possible score returned with the silhouette score function
