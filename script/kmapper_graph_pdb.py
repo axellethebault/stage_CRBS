@@ -6,25 +6,27 @@ from extract_main_chain_pdb import res_coord
 import class_KMeans
 
 # Initialize
-mapper = km.KeplerMapper(verbose=1)
+mapper = km.KeplerMapper(verbose=2)
 
 # Creation of the lens (list oc 3D coordinates from extract_main_chain_pdb.py)
 data = np.array(res_coord) #np array des coordonnées 3D de la chaîne principale d'1 fichier
 projected_data = mapper.fit_transform(data, projection=TSNE(n_components=2, random_state=0)) 
 
 # Create a cover with 10 elements 
-cover = km.Cover(n_cubes=10)
+Cov = km.Cover(n_cubes=10)
 ids = np.array([x for x in range(projected_data.shape[0])])
 projected_data2 = np.c_[ids, projected_data]
+cover = Cov.fit(data = projected_data2)
 
 # Clusterer definition
 clusterer = class_KMeans.SmartKMeans()
+clusterer._find_best_model(data=data)
 
 # Create dictionary called 'graph' with nodes, edges and meta-information
-graph = mapper.map( lens=projected_data, 
+graph = mapper.map(lens=projected_data, 
                     X=data, 
-                    clusterer= clusterer,
-                    cover=cover)
+                    clusterer= clusterer.model,
+                    cover=Cov)
 
 # Visualize the graph
 mapper.visualize(graph,
