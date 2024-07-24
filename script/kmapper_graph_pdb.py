@@ -20,17 +20,16 @@ cover = Cov.fit(data = projected_data2)
 
 # Clusterer definition
 clusterer = class_KMeans.SmartKMeans()
-clusterer._find_best_model(data=data)
 
 # Create dictionary called 'graph' with nodes, edges and meta-information
 graph = mapper.map(lens=projected_data, 
                     X=data, 
-                    clusterer= clusterer.model,
+                    clusterer= clusterer,
                     cover=Cov)
 
 # Visualize the graph
 mapper.visualize(graph,
-                 path_html="/home/thebault/stage/results/img/test_data_pdb.html",
+                 path_html="/home/thebault/stage/results/img/Graph_pdb.html",
                  title="Graph mapper")
 
 km.draw_matplotlib(graph, layout='kk')
