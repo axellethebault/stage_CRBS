@@ -9,6 +9,7 @@ import pandas as pd
 # récupère dans une liste les noms des fichiers du dossier /gstock/mapper/CEP3
 directory_path_os = '/gstock/mapper/CEP3'
 list_pdb = os.listdir(directory_path_os)
+print(list_pdb)
 
 points_atom = []
 
@@ -26,7 +27,7 @@ pdb_test = list_pdb[0]
 res_coord = coord_atom(pdb_test)
 n_atoms = len(res_coord)
 
-print(res_coord)
+#print(res_coord)
 print(n_atoms)
 
 pass

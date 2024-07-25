@@ -8,10 +8,9 @@ from Bio.PDB import PDBParser
 directory_path_os = '/gstock/mapper/CEP3'
 list_pdb = os.listdir(directory_path_os)
 
-points_atom = []
-
 # lire et extraire les coordonnées x, y et z des atomes de la chaîne principale "A" pour un fichier PDB 'name_pdb' à définir
-def coord_atom (name_pdb):
+def coord_atom (directory_path_os, name_pdb):
+    points_atom = []
     A = ["N", "CA", "C", "O"] # liste des atomes de la chaîne principale
     file_path = os.path.join(directory_path_os, name_pdb) #indique le chemin lié à chaque fichier 
     p = PDBParser()
@@ -26,7 +25,7 @@ def coord_atom (name_pdb):
 # test pour 1 fichier PDB (le premier) 
 pdb_test = list_pdb[0]
 print(pdb_test)
-res_coord = coord_atom(pdb_test)
+res_coord = coord_atom(directory_path_os, pdb_test)
 n_atoms = len(res_coord)
 
 #print(res_coord)
