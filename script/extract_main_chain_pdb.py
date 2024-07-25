@@ -1,7 +1,7 @@
 # OBJECTIF DU SCRIPT: lire les fichiers PDB dans /gstock/mapper/CEP3 et en extraire les chaînes principales
 # se placer dans l'environnement conda "condathebault" sur vscode avant de lancer ce script
 import os 
-import pandas as pd 
+#import pandas as pd 
 from Bio.PDB import PDBParser
 
 # récupère dans une liste les noms des fichiers du dossier /gstock/mapper/CEP3
@@ -23,21 +23,21 @@ def coord_atom (directory_path_os, name_pdb):
     return points_atom
 
 # test pour 1 fichier PDB (le premier) 
-pdb_test = list_pdb[0]
-print(pdb_test)
-res_coord = coord_atom(directory_path_os, pdb_test)
-n_atoms = len(res_coord)
+#pdb_test = list_pdb[0]
+#print(pdb_test)
+#res_coord = coord_atom(directory_path_os, pdb_test)
+#n_atoms = len(res_coord)
 
 #print(res_coord)
 #print(n_atoms)
 
 
-n_row_df = list(range(0,n_atoms))
+#n_row_df = list(range(0,n_atoms))
 
 # afficher les points en 3D avec plotly
 
 # convertir res_coord en dataframe
-df = pd.DataFrame(res_coord, columns = ['x', 'y', 'z']) 
+#df = pd.DataFrame(res_coord, columns = ['x', 'y', 'z']) 
 '''df.insert(3,'numero atome', n_row_df, True) # ajout d'une colonne correspondant au numéro d'atome, utile pour colorer dans le plot
 
 # plot en 3D

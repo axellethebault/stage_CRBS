@@ -6,9 +6,10 @@ import class_KMeans
 import networkx as nx
 import matplotlib.pyplot as plt
 
+
 def KMapper(file_name, res_coord, n_cubes):
     # Initialize
-    mapper = km.KeplerMapper(verbose=0)
+    mapper = km.KeplerMapper(verbose=2)
 
     # Creation of the lens (list oc 3D coordinates from extract_main_chain_pdb.py)
     data = np.array(res_coord) #np array des coordonnées 3D de la chaîne principale d'1 fichier
@@ -31,15 +32,15 @@ def KMapper(file_name, res_coord, n_cubes):
 
     # Visualize the graph
     mapper.visualize(graph,
-                    path_html="/home/thebault/stage/results/Networkx_graphs/Graph_pdb_{file_name}.html".format(file_name = file_name),
+                    path_html="/home/thebault/stage/results/Networkx_graphs_max_range=4/Graph_pdb_{file_name}_{n_cubes}.html".format(file_name = file_name, n_cubes = n_cubes),
                     title="Graph mapper {file_name}".format(file_name = file_name))
 
     km.draw_matplotlib(graph, layout='spring')
 
     # Get the Networkx structure with a deterministic approach and fixed layout
     G = km.adapter.to_networkx(graph) #converts the mapper.map graph into a networkx.Graph() object
-    pos = nx.spring_layout(G=G, seed=0) # sets the seed to 0 so it is deterministic
+    pos = nx.nx_pydot.graphviz_layout(G=G, prog = 'neato')
     nodes = nx.draw_networkx_nodes(G, node_size=8, pos=pos)  # noqa: F841
     edges = nx.draw_networkx_edges(G, pos=pos)  # noqa: F841
-    plt.savefig('/home/thebault/stage/results/Networkx_graphs/spring_layout_{file_name}.png'.format(file_name = file_name))
+    plt.savefig('/home/thebault/stage/results/Networkx_graphs_max_range=4/neato_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
 

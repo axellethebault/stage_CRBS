@@ -16,7 +16,7 @@ class pdb_to_graph():
             KMapper(file_name, self.res_coord, n_cubes)
         
 results = pdb_to_graph('/gstock/mapper/CEP3')
-print(results.mapper_algo(n_cubes=2))
+print(results.mapper_algo(n_cubes=5))
 
 
 

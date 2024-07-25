@@ -13,7 +13,7 @@ class SmartKMeans(sklearn.cluster.KMeans): #classe fille qui hérite de la class
     def _find_best_model(self, data): #best_model = KMeans avec n_cluster optimisé
         max_score_cluster = -1 # Lowest and worst possible score returned with the silhouette score function
        
-        max_range=20
+        max_range=4    #arbitrairement défini
         if max_range > len(data):  # On vérifie que il y a au moins 20 data, sinon on reduit le nombre de cluster maximal  
             max_range = len(data)
         '''print('max range = ', max_range)
