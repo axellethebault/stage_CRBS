@@ -30,17 +30,18 @@ def KMapper(file_name, res_coord, n_cubes):
                         clusterer= clusterer,
                         cover=Cov)
 
-    # Visualize the graph
-    mapper.visualize(graph,
-                    path_html="/home/thebault/stage/results/Networkx_graphs_max_range=4/Graph_pdb_{file_name}_{n_cubes}.html".format(file_name = file_name, n_cubes = n_cubes),
+    # Visualize the interactive graph
+    '''mapper.visualize(graph,
+                    path_html="/home/thebault/stage/results/results/Graph_pdb_{file_name}_{n_cubes}.html".format(file_name = file_name, n_cubes = n_cubes),
                     title="Graph mapper {file_name}".format(file_name = file_name))
 
-    km.draw_matplotlib(graph, layout='spring')
+    km.draw_matplotlib(graph, layout='spring')'''
 
     # Get the Networkx structure with a deterministic approach and fixed layout
     G = km.adapter.to_networkx(graph) #converts the mapper.map graph into a networkx.Graph() object
-    pos = nx.nx_pydot.graphviz_layout(G=G, prog = 'neato')
-    nodes = nx.draw_networkx_nodes(G, node_size=8, pos=pos)  # noqa: F841
+    #pos = nx.nx_pydot.graphviz_layout(G=G, prog = 'neato') => not deterministic
+    pos = nx.kamada_kawai_layout(G=G)
+    nodes = nx.draw_networkx_nodes(G, node_size=20, pos=pos)  # noqa: F841
     edges = nx.draw_networkx_edges(G, pos=pos)  # noqa: F841
-    plt.savefig('/home/thebault/stage/results/Networkx_graphs_max_range=4/spectral_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
+    plt.savefig('/home/thebault/stage/results/results/kamada_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
 
