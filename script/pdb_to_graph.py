@@ -15,8 +15,9 @@ class pdb_to_graph():
             self.res_coord = extract_main_chain_pdb.coord_atom(self.file_path, file_name)
             KMapper(file_name, self.res_coord, n_cubes)
         
-results = pdb_to_graph('/gstock/mapper/CEP3')
-print(results.mapper_algo(n_cubes=5))
+results = pdb_to_graph('/gstock/mapper/CEP3/')
+print(results.mapper_algo(n_cubes=3))
+#attention à modifier éventuellement le max_range (nombre de cluster max par cube) dans class_KMeans.py
 
 
 

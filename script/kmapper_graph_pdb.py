@@ -42,5 +42,5 @@ def KMapper(file_name, res_coord, n_cubes):
     pos = nx.nx_pydot.graphviz_layout(G=G, prog = 'neato')
     nodes = nx.draw_networkx_nodes(G, node_size=8, pos=pos)  # noqa: F841
     edges = nx.draw_networkx_edges(G, pos=pos)  # noqa: F841
-    plt.savefig('/home/thebault/stage/results/Networkx_graphs_max_range=4/neato_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
+    plt.savefig('/home/thebault/stage/results/Networkx_graphs_max_range=4/spectral_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
 
