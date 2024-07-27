@@ -22,8 +22,8 @@ def KMapper(file_name, res_coord, n_cubes):
     cover = Cov.fit(data = projected_data2)'''
 
     # Clusterer definition
-    clusterer = class_KMeans.SmartKMeans(res_coord=res_coord)
-
+    clusterer = class_KMeans.SmartKMeans()
+    
     # Create dictionary called 'graph' with nodes, edges and meta-information
     graph = mapper.map(lens=projected_data, 
                         X=data, 
@@ -32,7 +32,7 @@ def KMapper(file_name, res_coord, n_cubes):
 
     # Visualize the interactive graph
     '''mapper.visualize(graph,
-                    path_html="/home/thebault/stage/results/results/Graph_pdb_{file_name}_{n_cubes}.html".format(file_name = file_name, n_cubes = n_cubes),
+                    path_html="/home/thebault/stage/results/test/Graph_pdb_{file_name}_{n_cubes}.html".format(file_name = file_name, n_cubes = n_cubes),
                     title="Graph mapper {file_name}".format(file_name = file_name))
 
     km.draw_matplotlib(graph, layout='spring')'''
@@ -43,5 +43,5 @@ def KMapper(file_name, res_coord, n_cubes):
     pos = nx.kamada_kawai_layout(G=G)
     nodes = nx.draw_networkx_nodes(G, node_size=20, pos=pos)  # noqa: F841
     edges = nx.draw_networkx_edges(G, pos=pos)  # noqa: F841
-    plt.savefig('/home/thebault/stage/results/results/kamada_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
+    plt.savefig('/home/thebault/stage/results/test/kamada_{file_name}_{n_cubes}.png'.format(file_name = file_name, n_cubes = n_cubes))
 
